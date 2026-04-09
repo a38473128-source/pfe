@@ -10,8 +10,8 @@ export default function RootLayout({ children }) {
 
   const hideNavbar = pathname === "/signin" 
                   || pathname === "/signup"
-                  || pathname === "/admin"       // Admin Sign In
-                  || pathname === "/admin/dashboard"; // Admin Dashboard
+                  || pathname === "/admin"       
+                  || pathname === "/admin/dashboard"; 
 
   return (
     <html lang="en" className="h-full antialiased">
