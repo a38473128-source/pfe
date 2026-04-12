@@ -1,6 +1,7 @@
 "use client";
+
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -10,7 +11,6 @@ import "./globals.css";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
-
   const [user, setUser] = useState(null);
 
   const hideNavbar =
@@ -19,27 +19,32 @@ export default function RootLayout({ children }) {
     pathname === "/admin" ||
     pathname === "/admin/dashboard";
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   const handleLogout = () => {
+    localStorage.removeItem("user");
     setUser(null);
   };
 
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-screen flex bg-white text-black font-sans">
-        
-        
+    <html lang="en">
+      <body className="min-h-screen flex bg-white text-black">
+
         <Sidebar user={user} onLogout={handleLogout} />
 
-        
         <div className="flex-1 flex flex-col">
           {!hideNavbar && <Navbar />}
 
-          <main className="flex-1 p-4">
-            {children}
-          </main>
+          <main className="flex-1 p-4">{children}</main>
 
           <Footer />
         </div>
+
       </body>
     </html>
   );

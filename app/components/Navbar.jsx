@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Menu, X, Home, Search, User } from "lucide-react";
+import Link from "next/link";
 
 export default function Navbar() {
   const [shadow, setShadow] = useState(false);
@@ -29,26 +30,36 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
         {/* Logo */}
-        <div className="flex items-center gap-2 text-2xl font-bold text-blue-600">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-2xl font-bold text-blue-600"
+        >
           <Home className="w-6 h-6" />
           <span>RealEstate</span>
-        </div>
+        </Link>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
           <li>
-            <a href="#home" className="hover:text-blue-600 transition">Home</a>
+            <a href="#home" className="hover:text-blue-600 transition">
+              Home
+            </a>
           </li>
           <li>
-            <a href="#listings" className="hover:text-blue-600 transition">Listings</a>
+            <a href="#listings" className="hover:text-blue-600 transition">
+              Listings
+            </a>
           </li>
           <li>
-            <a href="#contact" className="hover:text-blue-600 transition">Contact</a>
+            <a href="#contact" className="hover:text-blue-600 transition">
+              Contact
+            </a>
           </li>
           <li>
-            <a href="#about" className="hover:text-blue-600 transition">About</a>
+            <a href="#about" className="hover:text-blue-600 transition">
+              About
+            </a>
           </li>
 
           <li>
@@ -92,10 +103,18 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t px-6 py-4 space-y-4">
-          <a href="#home" className="block">Home</a>
-          <a href="#listings" className="block">Listings</a>
-          <a href="#contact" className="block">Contact</a>
-          <a href="#about" className="block">About</a>
+          <a href="#home" className="block">
+            Home
+          </a>
+          <a href="#listings" className="block">
+            Listings
+          </a>
+          <a href="#contact" className="block">
+            Contact
+          </a>
+          <a href="#about" className="block">
+            About
+          </a>
 
           <div className="pt-4 border-t">
             {user ? (
