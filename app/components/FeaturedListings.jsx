@@ -9,9 +9,16 @@ export default function ListingSection() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("/api/properties");
-      const data = await res.json();
-      setImages(data);
+      try {
+        const res = await fetch("/api/properties");
+        const data = await res.json();
+
+        // 🔥 FIX IMPORTANT
+        setImages(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.log("API error:", error);
+        setImages([]);
+      }
     };
 
     fetchData();
@@ -19,18 +26,18 @@ export default function ListingSection() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-20" id="listings">
+
       {/* HEADER */}
       <div className="mb-12">
         <p className="text-gray-500 text-lg font-medium">Properties</p>
 
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 mt-4">
-          <h1 className="text-3xl md:text-4xl font-bold text-blue-600 leading-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-blue-600">
             Recently Added <br /> Properties
           </h1>
 
           <p className="text-gray-500 max-w-md text-sm md:text-base">
-            Discover premium real estate listings with accurate details,
-            verified properties, and the best homes in Morocco.
+            Discover premium real estate listings with accurate details.
           </p>
 
           <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-xl">
@@ -41,10 +48,11 @@ export default function ListingSection() {
 
       {/* GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {images.slice(0, 9).map((x, i) => (
+
+        {(images || []).slice(0, 9).map((x, i) => (
           <Card
             key={i}
-            className="overflow-hidden border-none shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl"
+            className="overflow-hidden border-none shadow-md hover:shadow-lg transition-all rounded-2xl"
           >
             {/* IMAGE */}
             <div className="relative h-[340px]">
@@ -54,7 +62,6 @@ export default function ListingSection() {
                 className="w-full h-full object-cover"
               />
 
-              {/* PRICE */}
               <div className="absolute bottom-3 left-3 bg-white text-blue-600 font-bold px-3 py-1 rounded-xl shadow">
                 {x.price}
               </div>
@@ -62,7 +69,9 @@ export default function ListingSection() {
 
             {/* INFO */}
             <CardContent className="p-5 space-y-3">
-              <h3 className="text-lg font-semibold text-blue-600">{x.titel}</h3>
+              <h3 className="text-lg font-semibold text-blue-600">
+                {x.titel}
+              </h3>
 
               <div className="flex gap-4 text-sm text-gray-600">
                 <span>🛏️ {x.bd}</span>
@@ -71,16 +80,6 @@ export default function ListingSection() {
               </div>
 
               <p className="text-sm text-gray-500">📍 {x.loc}</p>
-
-              {/* hover action feel like navbar style */}
-              <div className="pt-2">
-                <a
-                  href="#"
-                  className="text-blue-600 hover:text-blue-700 text-sm font-medium transition"
-                >
-                  View Details →
-                </a>
-              </div>
             </CardContent>
           </Card>
         ))}

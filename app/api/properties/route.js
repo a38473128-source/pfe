@@ -10,10 +10,13 @@ export async function GET() {
       .find({})
       .toArray();
 
-    return NextResponse.json(listings);
+    return NextResponse.json(listings || []);
+
   } catch (error) {
+    console.error("API ERROR:", error);
+
     return NextResponse.json(
-      { message: "Error fetching listings" },
+      { message: "Error fetching properties" },
       { status: 500 }
     );
   }

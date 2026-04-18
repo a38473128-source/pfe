@@ -9,8 +9,6 @@ import {
   MapPin,
   Heart,
   Users,
-  DollarSign,
-  Newspaper,
   Phone,
   User,
   Settings,
@@ -28,8 +26,6 @@ export default function Slidebar({ user, onLogout }) {
     locations: false,
     favorites: false,
     agents: false,
-    pricing: false,
-    blog: false,
     contact: false,
   });
 
@@ -45,7 +41,7 @@ export default function Slidebar({ user, onLogout }) {
     if (!confirmLogout) return;
 
     onLogout();
-    window.location.reload();
+    window.location.href = "/signin";
   };
 
   return (
@@ -67,7 +63,6 @@ export default function Slidebar({ user, onLogout }) {
         {/* HEADER */}
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-xl font-bold">Real Estate</h2>
-
           <button onClick={() => setOpen(false)}>
             <X />
           </button>
@@ -88,7 +83,8 @@ export default function Slidebar({ user, onLogout }) {
 
             {sections.home && (
               <div className="ml-6 mt-3 space-y-3 text-sm border-l border-white/20 pl-4">
-                <ProtectedLink user={user} href="/" className="block">
+                {/* 🔥 FIXED */}
+                <ProtectedLink user={user} href="/admin/dashboard" className="block">
                   Dashboard
                 </ProtectedLink>
 
@@ -237,10 +233,6 @@ export default function Slidebar({ user, onLogout }) {
                   Contact Us
                 </ProtectedLink>
 
-                <ProtectedLink user={user} href="/contact" className="block">
-                  Support
-                </ProtectedLink>
-
                 <ProtectedLink user={user} href="/faq" className="block">
                   FAQ
                 </ProtectedLink>
@@ -252,9 +244,10 @@ export default function Slidebar({ user, onLogout }) {
           <div className="pt-6 space-y-3">
             {user ? (
               <>
+                {/* 🔥 FIXED */}
                 <ProtectedLink
                   user={user}
-                  href="/dashboard"
+                  href="/admin/dashboard"
                   className="flex items-center gap-2"
                 >
                   <User size={18} /> Dashboard
